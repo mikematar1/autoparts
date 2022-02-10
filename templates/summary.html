@@ -1,0 +1,300 @@
+{% extends 'base.html'%}
+
+{% block head %}
+<script>
+    var bodyparts={
+        'Interior':['Electronic','plastic','radio','airbag','seats','dashboard'],
+        'Exterior':{
+            'Doors':['trunk','FR','FL','RR','RL'],
+            'Front Panels':['radiator','grill','fender','hood','bumper','headlights'],
+            'Rear Panels':['bumper','tail lights','fender']
+        },
+        'Mechanic':{
+            'Engine':['Engine','Dynamo','Marsh','Hydrolic Pump','Coil','Compressor AC','Sensor','Karase Motor','Computer'],
+            'Transmission':['Transmission','Sensor','Karase Vitesse','Gear','Trans Axle'],
+            'Front Axle':['Malkat','Terbi3a','Flensha','disk','Rolman','Cylinder frem','Atmasor','bayda','Sensor ABS','Traverse','Bwat dereksyon'],
+            'Rear Axle':['Differential','Mal2at','Terbi3a','Traverse','Atmassor','Flanja','Disk','Cylinder','ABS'],
+            'Nawe3im Bouz':['3elbit Fa2set','Servo Frem','Trombit Frem','Trombit ABS','3elbit May']
+        }
+    }
+    
+    var makes= ['None','Toyota','Honda','Mazda','Daihatsu','Mitsubishi','Nissan','Infiniti']
+    var models = {'None':['None'],
+    'Toyota':['yaris sedan','yaris hetchback','corolla','camry','gt86','c-hr','echo','fj cruiser','Land Cruiser','Prado','Seqouia','Siena','Rav4','Prius','Tacoma','Tundra','Avanza'],
+    'Honda':['Accord','Civic','CRV','Odyssey','Pilot','City'],
+    'Mazda':['M2','M3','M6','M323','M626','CX7','CX9','CX5','Tribute'],
+    'Daihatsu':['Sirion','Terios','MPV'],
+    'Mitsubishi':['Lancer','Eclipse','Endevor','Gelant','Mirage','Montero','Outlander','Galoper'],
+    'Nissan':['Sunny','Sentra','Altima','Maxima','Pathfinder','350Z','370Z','Versa','Tiida','Armada','Titan','Frontier','Juke','Micra','Murano','Rogue','X-Trail','X-terra'],
+    'Infiniti':['Qx4','Ex35','Fx35','G35','G37','Q30','Q50','Q60','Q70','Qx30','Qx50','Qx60','Qx80'],
+    'Lexus':['LX350','Rx350','Rx330','Sc430']}
+    window.onload=function(){
+        
+    makes.forEach(x => {
+        var e=document.createElement('option')
+        e.value=x
+        e.innerHTML=x
+        document.getElementById("make").appendChild(e)
+    });
+    var e=document.createElement('option')
+    e.value=0
+    e.innerHTML="All"
+    document.getElementById("year").appendChild(e)
+
+    for(var i = 1995;i<2022;i++){
+        var e=document.createElement('option')
+        e.value=i
+        e.innerHTML=i
+        document.getElementById("year").appendChild(e)
+    }
+
+    changemodels()
+    var elem=document.getElementById("interior");
+    bodyparts['Interior'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('interior')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("doors");
+    bodyparts['Exterior']['Doors'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('exterior');makevisible('doors')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("frontpanels");
+    bodyparts['Exterior']['Front Panels'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('exterior');makevisible('frontpanels')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("rearpanels");
+    bodyparts['Exterior']['Rear Panels'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('exterior');makevisible('doors')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+
+    elem = document.getElementById("engine");
+    bodyparts['Mechanic']['Engine'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('mechanic');makevisible('engine')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("frontaxle");
+    bodyparts['Mechanic']['Front Axle'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('mechanic');makevisible('frontaxle')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("rearaxle");
+    bodyparts['Mechanic']['Rear Axle'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('mechanic');makevisible('rearaxle')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("nawe3imbouz");
+    bodyparts['Mechanic']['Nawe3im Bouz'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('mechanic');makevisible('nawe3imbouz')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+    elem = document.getElementById("transmission");
+    bodyparts['Mechanic']['Transmission'].forEach(x=>{
+        var btn = document.createElement("button");
+        btn.setAttribute("onclick","document.getElementById('mainbutton').innerHTML= '" + x+"'; makevisible('base');makevisible('mechanic');makevisible('transmission')");
+        btn.innerHTML=x;
+        elem.appendChild(btn);
+    })
+}
+    function makevisible(id){
+        if(document.getElementById(id).style.display=='none'){
+         document.getElementById(id).style.display='block';
+        }else{
+            document.getElementById(id).style.display='none';
+        }
+    }
+
+    function changemodels(){
+        
+        var val=document.getElementById("make").value;
+        removeOptions(document.getElementById("model"))
+        for (const key in models[val]) {
+            var a = models[val][key]
+            var e=document.createElement('option')
+            e.value=a
+            e.innerHTML=a
+            document.getElementById("model").appendChild(e)
+
+        }
+    }
+    function removeOptions(selectElement) {
+   var i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i);
+   }
+}
+function submitrequest(){
+    var tframe = document.getElementById("timeframe").value
+    var make = document.getElementById("make").value
+    var model = document.getElementById("model").value
+    var year = document.getElementById("year").value
+    var bodypart = document.getElementById("mainbutton").innerHTML
+    window.location = 'http://127.0.0.1:5000/summary/' + tframe + "/" + make + "/" + model+"/" + year+"/"+bodypart
+}
+</script>
+<style>
+    .styled-table{
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+    .styled-table tr {
+        border-bottom: 1px solid #dddddd;
+    }
+    .styled-table th{
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th,
+    .styled-table td{
+        padding: 12px 15px;
+    }
+    
+</style>
+{% endblock %}
+
+
+{% block body %}
+<label for="timeframe">Enter a Time Frame</label>
+<select name="timeframe" id="timeframe">
+<option value="7">1 Week</option>
+<option value="30">1 month</option>
+<option value="180">6 months</option>
+<option value="365">1 year</option>
+<option value="0">All Time</option>
+</select>
+
+<label for="make">Make</label>
+<select onload="showmakes()" onchange="changemodels()" name="make" id="make">
+    
+</select>
+<label for="model">Model</label>
+<select name="model" id="model">
+
+</select>
+<label for="year">Year</label>
+<select name="year" id="year">
+
+</select>
+
+
+<label for="bodypart">Body Part</label>
+<div name="bodypart" id="bodypart" style="position: relative;display: inline-block;">
+<button onclick="makevisible('base');" id="mainbutton" >None</button>
+<div id="base" class="base" style="display: none;position: absolute;">
+    <div class="interior" style="display: inline-block;">
+        <button onclick = "makevisible('interior');">Interior</button>
+        <div class="i1" id="interior" style="display:none;">
+            
+        </div>
+    </div>
+    <div class="Exterior">
+        <button  onclick="makevisible('exterior');">Exterior</button>
+        <div class="i2" id="exterior" style="display:none;">
+            <div class="doors">
+                <button onclick="makevisible('doors')">Doors</button>
+                <div id="doors" style="display: none;">
+                    
+                </div>
+            </div>
+            <div class="front panels">
+                <button onclick="makevisible('frontpanels')">Front Panels</button>
+                <div id="frontpanels" style="display: none;">
+                    
+                </div>
+            </div>
+            <div class="rear panels">
+                <button onclick="makevisible('rearpanels')">Rear Panels</button>
+                <div id="rearpanels" style="display: none;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Mechanic">
+        <button  onclick="makevisible('mechanic');">Mechanic</button>
+        <div class="i2" id="mechanic" style="display:none;">
+            <div class="engine">
+                <button onclick="makevisible('engine')">Engine</button>
+                <div id="engine" style="display: none;">
+                    
+                </div>
+            </div>
+            <div class="transmission">
+                <button onclick="makevisible('transmission')">Transmission</button>
+                <div id="transmission" style="display: none;">
+                    
+
+                </div>
+            </div>
+            <div class="frontaxle">
+                <button onclick="makevisible('frontaxle')">Front Axle</button>
+                <div id="frontaxle" style="display: none;">
+                    
+                </div>
+            </div>
+            <div class="rearaxle">
+                <button onclick="makevisible('rearaxle')">Rear Axle</button>
+                <div id="rearaxle" style="display: none;">
+                    
+                </div>
+            </div>
+            <div class="nawe3imbouz" >
+                <button onclick="makevisible('nawe3imbouz')">nawe3im bouz</button>
+                <div id="nawe3imbouz" style="display: none;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<button onclick="submitrequest();">SEARCH</button>
+<table class='styled-table'>
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Body Part</th>
+        <th>Customer Name</th>
+        <th>Price</th>
+    </tr>
+    {% for i in items %}
+    <tr>
+
+        <td>{{i.make}}</td>
+        <td>{{i.model}}</td>
+        <td>{{i.year}}</td>
+        <td>{{i.bodypart}}</td>
+        <td>{{i.cname}}</td>
+        <td>{{i.price}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<form action="/admin">
+<input type="submit" value="Back to Main page"></form>
+{% endblock %}

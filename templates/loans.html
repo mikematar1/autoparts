@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}{% endblock %}
+{% block body %}
+<table>
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Body Part</th>
+        <th>Customer Name</th>
+        <th>Price</th>
+    </tr>
+    {% for i in tloans %}
+    <tr>
+
+        <td>{{i.make}}</td>
+        <td>{{i.model}}</td>
+        <td>{{i.year}}</td>
+        <td>{{i.bodypart}}</td>
+        <td>{{loaner.name}}</td>
+        <td>{{i.price}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<form action="/admin">
+    <input type="submit" value="Back to Main page"></form>
+{% endblock %}
